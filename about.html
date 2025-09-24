@@ -1,20 +1,36 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
+    <title>About Us | Recipe Book</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="welcome.css">
+    <script>
+        window.onload = function() {
+            alert("Welcome to the Recipe Book website!");
+        };
+    </script>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="login.html">Login</a> |
-        <a href="register.html">Register</a> |
-        <a href="recipes.html">Recipes</a> |
-        <a href="about.html">About Us</a> |
-        <a href="contact.html">Contact Us</a> 
-    </nav>
-    <h1>About Us</h1>
-    <p>Welcome to our Recipe Book website. Find and share your favorite recipes!</p>
+    <div class="about-container">
+        <div class="about-card">
+            <h1>About Us</h1>
+            <p>Welcome to our Recipe Book website. Find and share your favorite recipes!</p>
+            
+            <h2>Our Mission</h2>
+            <p id="mission-text">Our mission is to make cooking fun and accessible to everyone by providing easy-to-follow recipes for all tastes and dietary needs.</p>
+        
+            <button class="back-btn" onclick="confirmNavigation()">Back to Home</button>
+        </div>
+    </div>
+    <script>
+        function confirmNavigation() {
+            let userConfirmed = confirm("Are you sure you want to go back to the home page?");
+            if (userConfirmed) {
+                window.location.href = "page1.html";
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,25 +1,171 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipes</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recipe List | Recipe Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="welcome.css">
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="login.html">Login</a> |
-        <a href="register.html">Register</a> |
-        <a href="recipes.html">Recipes</a> |
-        <a href="about.html">About Us</a> |
-        <a href="contact.html">Contact Us</a> 
-    </nav>
-    <h1>Recipes</h1>
-    <ul>
-        <li><a href="pancakes.html">Pancakes</a></li>
-        <li><a href="pasta.html">Pasta</a></li>
-        <li><a href="frenchtoast.html">French toast</a></li>
-        <li><a href="chocolatecake.html">Chocolate Cake</a></li>
-    </ul>
+  <div class="recipes-container">
+    <h2>Recipe List</h2>
+
+    <!-- Category Filter -->
+    <select id="categoryFilter">
+      <option value="all">All</option>
+      <option value="breakfast">Breakfast</option>
+      <option value="lunch">Lunch</option>
+      <option value="dinner">Dinner</option>
+      <option value="dessert">Dessert</option>
+    </select>
+
+    <!-- PANCAKE -->
+    <div class="recipe-item" data-title="Pancake" data-category="breakfast">
+      <a href="pancakes.html">
+        <img src="pancake.jpg" alt="Pancake">
+        <h3>Pancake</h3>
+        <p>Fluffy pancakes made with milk and love.</p>
+      </a>
+      <div class="recipe-rating">
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+      </div>
+      <button class="favorite-btn" data-name="Pancake">Add to Favorites</button>
+    </div>
+
+    <!-- PASTA -->
+    <div class="recipe-item" data-title="Pasta" data-category="lunch">
+      <a href="pasta.html">
+        <img src="pasta.jpg" alt="Pasta">
+        <h3>Pasta</h3>
+        <p>A creamy and delicious pasta dish with Alfredo sauce.</p>
+      </a>
+      <div class="recipe-rating">
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+      </div>
+      <button class="favorite-btn" data-name="Pasta">Add to Favorites</button>
+    </div>
+
+    <!-- SMOOTHIE -->
+    <div class="recipe-item" data-title="Blueberry Smoothie" data-category="dessert">
+      <a href="smoothie.html">
+        <img src="smoothie.jpg" alt="Smoothie">
+        <h3>Blueberry Smoothie</h3>
+        <p>Blend, sip and have the symphony of flavours.</p>
+      </a>
+      <div class="recipe-rating">
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+      </div>
+      <button class="favorite-btn" data-name="Blueberry Smoothie">Add to Favorites</button>
+    </div>
+
+    <div class="recipe-item" data-title="Creamy Chicken Alfredo" data-category="dinner">
+      <a href="alfredo.html">
+        <img src="alfredo.jpg" alt="Smoothie">
+        <h3>Creamy Chicken Alfredo</h3>
+        <p>"Rich, Creamy and full of flavor-comfort food at its finest".</p>
+      </a>
+      <div class="recipe-rating">
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+      </div>
+      <button class="favorite-btn" data-name="Creamy Chicken Alfredo">Add to Favorites</button>
+    </div>
+
+    <!-- Random Recipe Button -->
+    <button id="randomRecipe">Surprise Me!</button>
+
+    <a href="page1.html" class="back-home">Back to Home</a>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      let searchBar = document.getElementById('searchBar');
+      let recipeItems = document.querySelectorAll('.recipe-item');
+
+      let categoryFilter = document.getElementById('categoryFilter');
+      categoryFilter.addEventListener('change', function () {
+        let selectedCategory = categoryFilter.value;
+        recipeItems.forEach(function (item) {
+          let category = item.getAttribute('data-category');
+          if (selectedCategory === 'all' || selectedCategory === category) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+
+      // Rating System
+      let stars = document.querySelectorAll('.recipe-rating .star');
+      stars.forEach(function (star) {
+        star.addEventListener('click', function () {
+          alert('You rated this recipe!');
+        });
+      });
+
+      let favButtons = document.querySelectorAll('.favorite-btn');
+      favButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          let name = button.getAttribute('data-name');
+          let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+          if (!favorites.includes(name)) {
+            favorites.push(name);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            alert(name + " added to favorites!");
+          } else {
+            alert(name + " is already in favorites!");
+          }
+        });
+      });
+
+      document.getElementById('randomRecipe').addEventListener('click', function () {
+        let randomRecipe = recipeItems[Math.floor(Math.random() * recipeItems.length)];
+        window.location.href = randomRecipe.querySelector('a').href;
+      });
+
+      let modal = document.querySelector('.recipe-modal');
+      let closeBtn = document.querySelector('.close-btn');
+      closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+      });
+
+      recipeItems.forEach(function (item) {
+        item.querySelector('a').addEventListener('click', function (e) {
+          e.preventDefault();
+          modal.style.display = 'block';
+          let title = item.querySelector('h3').textContent;
+          let ingredients = ['Flour', 'Milk', 'Eggs']; 
+          let instructions = 'Mix ingredients and cook on the stove.';
+
+          document.getElementById('modalRecipeTitle').textContent = title;
+          let ingredientsList = document.getElementById('modalIngredients');
+          ingredientsList.innerHTML = '';
+          ingredients.forEach(function (ingredient) {
+            let li = document.createElement('li');
+            li.textContent = ingredient;
+            ingredientsList.appendChild(li);
+          });
+          document.getElementById('modalInstructions').textContent = instructions;
+        });
+      });
+    });
+  </script>
 </body>
 </html>
