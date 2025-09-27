@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recipe List | Recipe Book</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="welcome.css">
 </head>
+
 <body>
   <div class="recipes-container">
     <h2>Recipe List</h2>
@@ -140,18 +142,18 @@
         window.location.href = randomRecipe.querySelector('a').href;
       });
 
-      let modal = document.querySelector('.recipe-modal');
+      /*let modal = document.querySelector('.recipe-modal');
       let closeBtn = document.querySelector('.close-btn');
       closeBtn.addEventListener('click', function () {
         modal.style.display = 'none';
       });
-
+*/
       recipeItems.forEach(function (item) {
         item.querySelector('a').addEventListener('click', function (e) {
           e.preventDefault();
           modal.style.display = 'block';
           let title = item.querySelector('h3').textContent;
-          let ingredients = ['Flour', 'Milk', 'Eggs']; 
+          let ingredients = ['Flour', 'Milk', 'Eggs'];
           let instructions = 'Mix ingredients and cook on the stove.';
 
           document.getElementById('modalRecipeTitle').textContent = title;
@@ -168,4 +170,5 @@
     });
   </script>
 </body>
+
 </html>
