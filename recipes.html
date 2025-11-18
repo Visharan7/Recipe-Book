@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recipe List | Recipe Book</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="welcome.css">
+  <link rel="stylesheet" href="css/welcome.css">
 </head>
 
 <body>
@@ -95,41 +95,75 @@
     <a href="page1.html" class="back-home">Back to Home</a>
   </div>
 
+  <!-- Recipe Modal (ADDED) -->
+  <div class="recipe-modal" style="
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;">
+    <div class="modal-content" style="
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      position: relative;">
+      
+      <span class="close-btn" style="
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        cursor: pointer;
+        font-size: 22px;">&times;</span>
+
+      <h3 id="modalRecipeTitle"></h3>
+
+      <h4>Ingredients</h4>
+      <ul id="modalIngredients"></ul>
+
+      <h4>Instructions</h4>
+      <p id="modalInstructions"></p>
+
+    </div>
+  </div>
+
   <!-- JavaScript -->
   <script>
     window.addEventListener('DOMContentLoaded', function () {
-      let searchBar = document.getElementById('searchBar');
+
       let recipeItems = document.querySelectorAll('.recipe-item');
 
+      // Category Filter
       let categoryFilter = document.getElementById('categoryFilter');
       categoryFilter.addEventListener('change', function () {
-        let selectedCategory = categoryFilter.value;
-        recipeItems.forEach(function (item) {
-          let category = item.getAttribute('data-category');
-          if (selectedCategory === 'all' || selectedCategory === category) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
+        let selected = categoryFilter.value;
+
+        recipeItems.forEach(item => {
+          let cat = item.getAttribute('data-category');
+          item.style.display = (selected === 'all' || selected === cat) ? 'block' : 'none';
         });
       });
 
-      // Rating System
+      // Rating
       let stars = document.querySelectorAll('.recipe-rating .star');
-      stars.forEach(function (star) {
-        star.addEventListener('click', function () {
+      stars.forEach(star => {
+        star.addEventListener('click', () => {
           alert('You rated this recipe!');
         });
       });
 
+      // Favorites
       let favButtons = document.querySelectorAll('.favorite-btn');
-      favButtons.forEach(function (button) {
-        button.addEventListener('click', function () {
+      favButtons.forEach(button => {
+        button.addEventListener('click', () => {
           let name = button.getAttribute('data-name');
-          let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-          if (!favorites.includes(name)) {
-            favorites.push(name);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
+          let fav = JSON.parse(localStorage.getItem('favorites')) || [];
+
+          if (!fav.includes(name)) {
+            fav.push(name);
+            localStorage.setItem('favorites', JSON.stringify(fav));
             alert(name + " added to favorites!");
           } else {
             alert(name + " is already in favorites!");
@@ -137,38 +171,48 @@
         });
       });
 
+      // Random Recipe
       document.getElementById('randomRecipe').addEventListener('click', function () {
-        let randomRecipe = recipeItems[Math.floor(Math.random() * recipeItems.length)];
-        window.location.href = randomRecipe.querySelector('a').href;
+        let random = recipeItems[Math.floor(Math.random() * recipeItems.length)];
+        window.location.href = random.querySelector('a').href;
       });
 
-      /*let modal = document.querySelector('.recipe-modal');
+      // Modal Logic
+      let modal = document.querySelector('.recipe-modal');
       let closeBtn = document.querySelector('.close-btn');
+
       closeBtn.addEventListener('click', function () {
         modal.style.display = 'none';
       });
-*/
-      recipeItems.forEach(function (item) {
+
+      recipeItems.forEach(item => {
         item.querySelector('a').addEventListener('click', function (e) {
           e.preventDefault();
-          modal.style.display = 'block';
+
+          modal.style.display = 'flex';
+
           let title = item.querySelector('h3').textContent;
-          let ingredients = ['Flour', 'Milk', 'Eggs'];
-          let instructions = 'Mix ingredients and cook on the stove.';
+          let ingredients = ['Flour', 'Milk', 'Eggs'];  
+          let instructions = 'Mix ingredients and cook.';
 
           document.getElementById('modalRecipeTitle').textContent = title;
-          let ingredientsList = document.getElementById('modalIngredients');
-          ingredientsList.innerHTML = '';
-          ingredients.forEach(function (ingredient) {
+
+          let list = document.getElementById('modalIngredients');
+          list.innerHTML = '';
+
+          ingredients.forEach(i => {
             let li = document.createElement('li');
-            li.textContent = ingredient;
-            ingredientsList.appendChild(li);
+            li.textContent = i;
+            list.appendChild(li);
           });
+
           document.getElementById('modalInstructions').textContent = instructions;
         });
       });
+
     });
   </script>
+
 </body>
 
 </html>

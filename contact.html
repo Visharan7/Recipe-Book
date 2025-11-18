@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | Recipe Book</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="welcome.css">
-    <script>
+    <link rel="stylesheet" href="css/welcome.css">
 
+    <script>
         window.onload = function () {
             alert("Welcome to the Contact Us page!");
         };
+
         function handleSocialClick(platform) {
             console.log("User clicked on " + platform);
         }
@@ -23,7 +24,7 @@
             <p>If you have any questions, feedback, or suggestions, feel free to reach out to us!</p>
             
             <h2>Contact Information</h2>
-            <p>Email us at: <a href="mailto:contact@recipebook.com">contact@recipebook.com</a></p>
+            <p>Email: <a href="mailto:contact@recipebook.com">contact@recipebook.com</a></p>
             <p>We are available 24/7 and will get back to you as soon as possible.</p>
 
             <h2>Follow Us</h2>
@@ -32,15 +33,17 @@
                 <a href="https://instagram.com" target="_blank" onclick="handleSocialClick('Instagram')">Instagram</a> |
                 <a href="https://twitter.com" target="_blank" onclick="handleSocialClick('Twitter')">Twitter</a>
             </div>
+
+            <button class="back-btn" onclick="confirmNavigation()">Back to Home</button>
         </div>
     </div>
+
     <script>
         function confirmNavigation() {
-            let userConfirmed = confirm("Are you sure you want to go back to the home page?");
-            if (userConfirmed) {
-                window.location.href = "page1.html";
+            if (confirm("Are you sure you want to go back to the home page?")) {
+                window.location.href = "index.html";
             }
         }
-        </script>
+    </script>
 </body>
 </html>
