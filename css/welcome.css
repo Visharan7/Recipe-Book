@@ -74,6 +74,9 @@
     justify-content: space-around;   
     align-items: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
   
   .logo {
